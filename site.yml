@@ -1,0 +1,10 @@
+---
+  - hosts: all
+    roles:
+      - kiosk
+    vars:
+      - kiosk_url: "https://www.autodeist.com/"
+      - ansible_user: pi
+      - ansible_pass: raspberry
+    become: yes
+    become_method: sudo

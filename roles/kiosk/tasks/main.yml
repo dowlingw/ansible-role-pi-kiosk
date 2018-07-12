@@ -1,0 +1,49 @@
+---
+  - name: APT Sources
+    apt_repository:
+      repo: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - "deb http://archive.raspbian.org/raspbian stretch main contrib non-free ui"
+      - "deb http://archive.raspberrypi.org/debian/ stretch main ui"
+
+  - name: Prerequisites
+    apt: "name={{ item }} state=installed"
+    with_items:
+      - chromium-browser
+      - unclutter
+      - xscreensaver
+
+  - name: pi user folders
+    file:
+      path: "{{ item }}"
+      owner: pi
+      group: pi
+      state: directory
+      mode: 0750
+    with_items:
+      - /home/pi/.config/
+      - /home/pi/.config/autostart/
+      - /home/pi/.config/lxsession/
+      - /home/pi/.config/lxsession/LXDE-pi/
+
+  - name: pi configuration
+    template:
+      src: "{{ role_path }}/{{ item.src }}"
+      dest: "{{ item.dst }}"
+      owner: pi
+      group: pi
+      mode: 0755
+    with_items:
+      - { src: "files/xscreensaver.conf", dst: "/home/pi/.xscreensaver" }
+      - { src: "files/unclutter.conf", dst: "/home/pi/.config/autostart/unclutter.desktop" }
+      - { src: "files/chromium.conf", dst: "/home/pi/.config/autostart/chromium.desktop" }
+      - { src: "scripts/restart_chromium.sh", dst: "/home/pi/restart_chromium.sh" }
+      - { src: "scripts/run_chromium.sh", dst: "/home/pi/run_chromium.sh" }
+
+  - name: Chromium startup
+    lineinfile:
+      path: /home/pi/.config/lxsession/LXDE-pi/autostart
+      line: '@/home/pi/run_chromium.sh'
+      state: present
