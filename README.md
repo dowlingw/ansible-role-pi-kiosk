@@ -1,12 +1,22 @@
-Ghetto Kiosk
-============
+# Ansible Role: Pi Kiosk
 
-Run this ansible playbook to configure a clean Raspbian host as a presentation machine for an event.
+Configures a Raspberry Pi (running Raspbian desktop) as a signage display to a single URL.
 
-This playbook assumes you're running Raspbian desktop.
 
-Edit the `kiosk_url` in the `site.yml` file to set the URL for your presentation.
+## Requirements
 
-```
-ansible-playbook -i HOST, site.yml
-```
+None.
+
+
+## Role Variables
+
+Simply set the variable `kiosk_url` to the URL you wish to be displayed.
+
+
+## License
+MIT
+
+
+## Author Information
+
+This role was created in 2018 by Will Dowling.
