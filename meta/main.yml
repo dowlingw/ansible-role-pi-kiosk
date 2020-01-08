@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: pi-kiosk
   author: dowlingw
   description: "Configures a Raspberry Pi (running Raspbian desktop) as a signage displayt"
   license: "MIT"
